@@ -1,3 +1,6 @@
+import { MPCollectionChart } from '@moocpilot/analytics-components';
+import '@moocpilot/analytics-components/dist/analytics-components.min.css';
+
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -5,9 +8,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import CohortSelector from '../CohortSelector/index';
 import InstructorSettings from '../InstructorSettings';
-import { MPCollectionChart } from '@moocpilot/analytics-components';
 
-import '@moocpilot/analytics-components/dist/analytics-components.min.css';
 
 class MOOCPilotApp extends Component {
   constructor(props) {
@@ -65,19 +66,20 @@ class MOOCPilotApp extends Component {
         graph = (<p>No grades found!</p>);
       }
     }
-    return (<Container>
-      <Row>
-        <Col />
-      </Row>
-      <Row>
-        <Col>
-          {menu}
-        </Col>
-        <Col>
-          {graph}
-        </Col>
-      </Row>
-    </Container>);
+    return (
+      <Container>
+        <Row>
+          <Col />
+        </Row>
+        <Row>
+          <Col>
+            {menu}
+          </Col>
+          <Col>
+            {graph}
+          </Col>
+        </Row>
+      </Container>);
   }
 }
 
@@ -86,6 +88,8 @@ MOOCPilotApp.defaultProps = {
   coursegrades: null,
   getCourseGrades: () => {
   },
+  startedFetching: false,
+  finishedFetching: false,
 };
 
 MOOCPilotApp.propTypes = {
@@ -97,6 +101,8 @@ MOOCPilotApp.propTypes = {
     cohorts: PropTypes.array,
   }),
   getCourseGrades: PropTypes.func,
+  startedFetching: PropTypes.bool,
+  finishedFetching: PropTypes.bool,
 };
 
 export default MOOCPilotApp;

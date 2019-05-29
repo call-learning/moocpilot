@@ -36,20 +36,22 @@ const fetchCourseGrades = () => (
     let reportlist = null;
     if (process && process.env) {
       switch (process.env.NODE_ENV) {
-        case 'test':
+        case 'test': {
           // Here we only process local folder, no API
-          const gradepath = process.env.NODE_ENV == 'test' ? './tests/sampledata/gradereports/' : process.env.SAMPLE_GRADE_DATA_FOLDER;
+          const gradepath = './tests/sampledata/gradereports/';
           // Fetch the files locally in the test folder.
           reportlist = await getGradeReportsFromLocalFolder(gradepath);
           break;
-        case 'development':
+        }
+        case 'development': {
           const currenturl = new URL(window.location.href);
           reportlist = await getGradeReportsFromAPI(
             `${currenturl.protocol}//${currenturl.host}`,
             'devcourse',
           );
           break;
-        default:
+        }
+        default: {
           if (typeof window !== 'undefined' && window.document && window.document.createElement) {
             // We are in the browser and supposedly logged in.
             const currenturl = new URL(window.location.href);
@@ -58,6 +60,7 @@ const fetchCourseGrades = () => (
               getCourseIDFromURL(currenturl),
             );
           }
+        }
       }
     }
     if (reportlist) {

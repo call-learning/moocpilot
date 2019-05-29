@@ -21,7 +21,6 @@ const App = () => (
           <nav>
             <ul className="nav">
               <li className="nav-item"><Link className="nav-link" to="/">Home</Link></li>
-              <li className="nav-item"><Link className="nav-link" to="/posts">Posts</Link></li>
               <li className="nav-item"><Link className="nav-link" to="/public/disclosure">Disclosure</Link></li>
             </ul>
           </nav>

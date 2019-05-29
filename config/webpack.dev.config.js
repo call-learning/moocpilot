@@ -129,7 +129,7 @@ module.exports = Merge.smart(commonConfig, {
     historyApiFallback: true,
     hot: true,
     inline: true,
-    before(app, server) {
+    before(app) {
       app.post('/courses/devcourse/instructor/api/list_report_downloads', (req, res) => {
         res.json({
           downloads: glob.sync(path.join(`.${SAMPLE_GRADE_DATA_FOLDER}`, '*.csv'))

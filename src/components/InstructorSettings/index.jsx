@@ -25,6 +25,7 @@ class InstructorSettings extends Component {
       <div>
         <span>Instructor settings</span>
         <div>
+          {/* eslint-disable-next-line jsx-a11y/label-has-for */}
           <label>Grade threshold:<input
             step="0.1"
             value={this.props.gradeThreshold}
@@ -35,8 +36,10 @@ class InstructorSettings extends Component {
           />
           </label>
         </div>
-        <CohortSelector cohortList={this.props.cohorts}
-                        onCohortSelectionChange={this.cohortSelectionChange}/>
+        <CohortSelector
+          cohortList={this.props.cohorts}
+          onCohortSelectionChange={this.cohortSelectionChange}
+        />
       </div>
     );
   }

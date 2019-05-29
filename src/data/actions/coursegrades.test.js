@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import {
-  FINISHED_FETCHING_COURSEGRADES, GET_COURSEGRADES,
+  FINISHED_FETCHING_COURSEGRADES,
   STARTED_FETCHING_COURSEGRADES,
 } from '../constants/actionTypes/coursegrades';
 import {
@@ -28,14 +28,6 @@ describe('actions', () => {
 
 
   it('fetching coursegrades', () => {
-    const coursegrades = {
-      collections: [],
-      students: [],
-      grades: [],
-      activities: [],
-      cohorts: [],
-    };
-
     const store = mockStore({ coursegrades: {} });
     return store.dispatch(fetchCourseGrades())
       .then(() => {
@@ -45,5 +37,6 @@ describe('actions', () => {
           .toContainEqual({ type: FINISHED_FETCHING_COURSEGRADES });
       });
   }, 30000);
-  // We add some large timeout here, just to prevent the test from failing because of the CSV parsing
+  // We add some large timeout here, just to prevent the test from failing because
+  // of the CSV parsing
 });

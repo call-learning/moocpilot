@@ -13,7 +13,7 @@ module.exports = Merge.smart(commonConfig, {
   devtool: 'source-map',
   entry: {
     // enable react's custom hot dev client so we get errors reported in the browser
-    "moocpilot-frontend": [path.resolve(__dirname, '../src/setpath.jsx'), path.resolve(__dirname, '../src/index.jsx')],
+    'moocpilot-frontend': [path.resolve(__dirname, '../src/setpath.jsx'), path.resolve(__dirname, '../src/index.jsx')],
   },
   output: {
     filename: '[name].js',
@@ -131,7 +131,7 @@ module.exports = Merge.smart(commonConfig, {
       </script>
     */
     new webpack.DefinePlugin({
-      MOOCPILOTAPPURLVAR :  JSON.stringify('moocpilotfrontendbaseurl'),
+      MOOCPILOTAPPURLVAR: JSON.stringify('moocpilotfrontendbaseurl'),
     }),
   ],
 });

@@ -1,6 +1,5 @@
 import coursegrades from './coursegrades';
 import {
-  GET_COURSEGRADES,
   STARTED_FETCHING_COURSEGRADES,
   FINISHED_FETCHING_COURSEGRADES,
 } from '../constants/actionTypes/coursegrades';

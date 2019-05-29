@@ -19,9 +19,10 @@ class CohortSelector extends Component {
     }
   }
   render() {
-    let optionList=[];
+    const optionList = [];
     let selectedId = 0;
     this.props.cohortList.forEach((item, i) => {
+      // eslint-disable-next-line react/no-array-index-key
       optionList.push(<option key={i} value={i} >{item.name}</option>);
       if (item.selected) {
         selectedId = i;
@@ -29,7 +30,8 @@ class CohortSelector extends Component {
     });
     return (
       <div>
-        <a>View a Cohort</a>
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+        <a href="#">View a Cohort</a>
         <select onChange={this.changeCurrentCohort} defaultValue={selectedId}>
           {optionList}
         </select>
@@ -41,7 +43,7 @@ class CohortSelector extends Component {
 
 CohortSelector.defaultProps = {
   cohortList: [],
-  onCohortChange: () => {},
+  onCohortSelectionChange: null,
 };
 
 CohortSelector.propTypes = {
