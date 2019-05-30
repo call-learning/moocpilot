@@ -16,8 +16,8 @@ class InstructorSettings extends Component {
     this.props.onInstructorSettingsChange({ gradeThreshold: Number(e.target.value) });
   }
 
-  cohortSelectionChange(cohortName) {
-    this.props.onInstructorSettingsChange({ cohort: cohortName });
+  cohortSelectionChange(cohortsid) {
+    this.props.onInstructorSettingsChange({ selectedCohorts: cohortsid });
   }
 
   render() {
@@ -37,7 +37,8 @@ class InstructorSettings extends Component {
           </label>
         </div>
         <CohortSelector
-          cohortList={this.props.cohorts}
+          cohorts={this.props.cohorts}
+          selectedCohorts={this.props.selectedCohorts}
           onCohortSelectionChange={this.cohortSelectionChange}
         />
       </div>
@@ -49,6 +50,7 @@ class InstructorSettings extends Component {
 InstructorSettings.defaultProps = {
   gradeThreshold: 0,
   cohorts: [],
+  selectedCohorts: [],
   onInstructorSettingsChange: () => {
   },
 };
@@ -56,6 +58,7 @@ InstructorSettings.defaultProps = {
 InstructorSettings.propTypes = {
   gradeThreshold: PropTypes.number,
   cohorts: PropTypes.arrayOf(PropTypes.object),
+  selectedCohorts: PropTypes.arrayOf(PropTypes.number),
   onInstructorSettingsChange: PropTypes.func,
 };
 

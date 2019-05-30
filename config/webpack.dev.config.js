@@ -57,6 +57,7 @@ module.exports = Merge.smart(commonConfig, {
             loader: 'sass-loader', // compiles Sass to CSS
             options: {
               sourceMap: true,
+              data: '@import "App";',
               includePaths: [
                 path.join(__dirname, '../node_modules'),
                 path.join(__dirname, '../src'),

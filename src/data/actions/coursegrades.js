@@ -3,6 +3,7 @@ import {
   getGradeReportsFromAPI,
   parseGradeReports,
   getCourseIDFromURL,
+  getCollectionFromFilename,
 } from '@moocpilot/tools';
 
 import {
@@ -64,6 +65,24 @@ const fetchCourseGrades = () => (
       }
     }
     if (reportlist) {
+      // TODO: we limit the number of reports if this value is defined
+      // TODO : rework this part
+      let LIMITREPORTPERWEEK=true;
+      if (typeof LIMITREPORTPERWEEK !== 'undefined' && LIMITREPORTPERWEEK) {
+        reportlist = reportlist.sort((r1, r2) => r1.name.localeCompare(r2.name));
+        console.log(reportlist);
+        reportlist = Array.from(reportlist).filter((value, index, array) => {
+          if (index === 0) return true;
+          const WEEKLAPSE = 604800000;
+          const thiscollection = getCollectionFromFilename(value.name);
+          const lastcollection = getCollectionFromFilename(array[index - 1].name);
+          if ((thiscollection.timestamp - lastcollection.timestamp) > WEEKLAPSE) {
+            return true;
+          }
+          return false;
+        });
+        console.log(reportlist);
+      }
       return parseGradeReports(reportlist)
         .then((grades) => {
           dispatch(getCourseGrades(grades));

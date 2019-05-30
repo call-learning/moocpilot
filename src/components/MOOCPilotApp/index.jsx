@@ -1,14 +1,9 @@
 import { MPCollectionChart } from '@moocpilot/analytics-components';
 import '@moocpilot/analytics-components/dist/analytics-components.min.css';
-
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import CohortSelector from '../CohortSelector/index';
 import InstructorSettings from '../InstructorSettings';
-
 
 class MOOCPilotApp extends Component {
   constructor(props) {
@@ -22,17 +17,9 @@ class MOOCPilotApp extends Component {
   }
 
   changeInstructorSettings(param) {
-    if (param.cohort) {
-      const cohortList = this.state.selectedCohorts;
-      this.state.selectedCohorts.forEach((element, index) => {
-        if (element === param.cohort) {
-          cohortList[index].selected = true;
-        } else {
-          cohortList[index].selected = false;
-        }
-      });
-      this.setState({ cohortSelection: cohortList });
-      console.log(this.state.cohortSelection);
+    if (param.selectedCohorts) {
+      this.setState({ selectedCohorts: param.selectedCohorts });
+      console.log(this.state.selectedCohorts);
     }
     if (param.gradeThreshold) {
       this.setState({ gradeThreshold: param.gradeThreshold });
@@ -42,12 +29,17 @@ class MOOCPilotApp extends Component {
   render() {
     let menu = '';
     let graph = (
-      <Container>
+      <div className="container">
         <p>Fetching grades</p>
-      </Container>);
-
+      </div>);
     if (!this.props.startedFetching || this.props.finishedFetching) {
       if (this.props.coursegrades) {
+        const gthreshold = this.state.gradeThreshold;
+        const filteredgrades = this.props.coursegrades.grades.filter(
+          g => g.value > gthreshold
+        //&& (this.state.selectedCohorts.length > 0
+          //&& this.state.selectedCohorts.indexOf(g.cohort) !== -1)
+        );
         menu = (
           <InstructorSettings
             cohorts={this.props.coursegrades.cohorts}
@@ -60,26 +52,24 @@ class MOOCPilotApp extends Component {
           collections={this.props.coursegrades.collections}
           activities={this.props.coursegrades.activities}
           students={this.props.coursegrades.students}
-          grades={this.props.coursegrades.grades}
+          cohorts={this.props.coursegrades.cohorts}
+          grades={filteredgrades}
         />);
       } else {
         graph = (<p>No grades found!</p>);
       }
     }
     return (
-      <Container>
-        <Row>
-          <Col />
-        </Row>
-        <Row>
-          <Col>
+      <div className="container">
+        <div className="row">
+          <div>
             {menu}
-          </Col>
-          <Col>
+          </div>
+          <div>
             {graph}
-          </Col>
-        </Row>
-      </Container>);
+          </div>
+        </div>
+      </div>);
   }
 }
 

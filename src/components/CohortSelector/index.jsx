@@ -8,32 +8,38 @@ class CohortSelector extends Component {
   constructor(props) {
     super(props);
     // Bind the event so 'this' is working correctly in the call
-    this.changeCurrentCohort = this.changeCurrentCohort.bind(this);
+    this.selectCohorts = this.selectCohorts.bind(this);
   }
 
-  changeCurrentCohort(e) {
-    const cohortID = e.target.value;
-    if (cohortID) {
-      const cohortName = this.props.cohortList[cohortID];
-      this.props.onCohortSelectionChange(cohortName);
-    }
-  }
-  render() {
-    const optionList = [];
-    let selectedId = 0;
-    this.props.cohortList.forEach((item, i) => {
-      // eslint-disable-next-line react/no-array-index-key
-      optionList.push(<option key={i} value={i} >{item.name}</option>);
-      if (item.selected) {
-        selectedId = i;
+  selectCohorts(e) {
+    const cohortids = Array.from(e.target.selectedOptions).reduce((acc, val) => {
+      if (val.value !== 'all') {
+        acc.push(Number.parseInt(val.value,10));
+      } else {
+        return []; // Nullify selection if we have selected all
       }
-    });
+      return acc;
+    }, []);
+
+    this.props.onCohortSelectionChange(cohortids);
+  }
+
+  render() {
+    const OPTION_ALL = [<option key="all" value="all">All</option>];
+    const selectedId = 0;
+    const optionList = this.props.cohorts.map(c =>
+      (<option
+        key={c.id}
+        value={c.id}
+        defaultChecked={this.props.selectedCohorts.indexOf(c.id) !== -1}
+      > {c.name}
+      </option>));
+
     return (
       <div>
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a href="#">View a Cohort</a>
-        <select onChange={this.changeCurrentCohort} defaultValue={selectedId}>
-          {optionList}
+        <select multiple onChange={this.selectCohorts} defaultValue={this.props.selectedCohorts}>
+          {[...OPTION_ALL, ...optionList]}
         </select>
       </div>
     );
@@ -42,12 +48,14 @@ class CohortSelector extends Component {
 
 
 CohortSelector.defaultProps = {
-  cohortList: [],
+  cohorts: [],
+  selectedCohorts: [],
   onCohortSelectionChange: null,
 };
 
 CohortSelector.propTypes = {
-  cohortList: PropTypes.arrayOf(PropTypes.object),
+  cohorts: PropTypes.arrayOf(PropTypes.object),
+  selectedCohorts: PropTypes.arrayOf(PropTypes.number),
   onCohortSelectionChange: PropTypes.func,
 };
 
