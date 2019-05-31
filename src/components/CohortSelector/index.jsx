@@ -12,21 +12,20 @@ class CohortSelector extends Component {
   }
 
   selectCohorts(e) {
-    const cohortids = Array.from(e.target.selectedOptions).reduce((acc, val) => {
+    let cohortsids = [];
+    for (const val of e.target.selectedOptions) {
       if (val.value !== 'all') {
-        acc.push(Number.parseInt(val.value,10));
+        cohortsids.push(Number.parseInt(val.value, 10));
       } else {
-        return []; // Nullify selection if we have selected all
+        cohortsids = [];
+        break;
       }
-      return acc;
-    }, []);
-
-    this.props.onCohortSelectionChange(cohortids);
+    }
+    this.props.onCohortSelectionChange(cohortsids);
   }
 
   render() {
     const OPTION_ALL = [<option key="all" value="all">All</option>];
-    const selectedId = 0;
     const optionList = this.props.cohorts.map(c =>
       (<option
         key={c.id}
@@ -46,7 +45,6 @@ class CohortSelector extends Component {
   }
 }
 
-
 CohortSelector.defaultProps = {
   cohorts: [],
   selectedCohorts: [],
@@ -58,6 +56,5 @@ CohortSelector.propTypes = {
   selectedCohorts: PropTypes.arrayOf(PropTypes.number),
   onCohortSelectionChange: PropTypes.func,
 };
-
 
 export default CohortSelector;

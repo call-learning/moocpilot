@@ -46,7 +46,6 @@ class InstructorSettings extends Component {
   }
 }
 
-
 InstructorSettings.defaultProps = {
   gradeThreshold: 0,
   cohorts: [],
@@ -61,6 +60,5 @@ InstructorSettings.propTypes = {
   selectedCohorts: PropTypes.arrayOf(PropTypes.number),
   onInstructorSettingsChange: PropTypes.func,
 };
-
 
 export default InstructorSettings;

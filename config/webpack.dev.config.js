@@ -121,6 +121,9 @@ module.exports = Merge.smart(commonConfig, {
     // the HotModuleReplacementPlugin has to be specified in the Webpack configuration
     // https://webpack.js.org/configuration/dev-server/#devserver-hot
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      LIMITREPORTPERWEEK: JSON.stringify(true),
+    }),
   ],
   // This configures webpack-dev-server which serves bundles from memory and provides live
   // reloading.

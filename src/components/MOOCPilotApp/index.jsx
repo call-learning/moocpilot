@@ -35,11 +35,9 @@ class MOOCPilotApp extends Component {
     if (!this.props.startedFetching || this.props.finishedFetching) {
       if (this.props.coursegrades) {
         const gthreshold = this.state.gradeThreshold;
-        const filteredgrades = this.props.coursegrades.grades.filter(
-          g => g.value > gthreshold
-        //&& (this.state.selectedCohorts.length > 0
-          //&& this.state.selectedCohorts.indexOf(g.cohort) !== -1)
-        );
+        const filteredgrades = this.props.coursegrades.grades.filter(g => g.value > gthreshold
+          && (this.state.selectedCohorts.length === 0 ||
+              this.state.selectedCohorts.indexOf(g.cohort) !== -1));
         menu = (
           <InstructorSettings
             cohorts={this.props.coursegrades.cohorts}

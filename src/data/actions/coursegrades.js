@@ -34,19 +34,19 @@ const getCourseGrades = coursegrades => (
 const fetchCourseGrades = () => (
   async (dispatch) => {
     dispatch(startedFetchingCourseGrades());
-    let reportlist = null;
+    let collections = null;
     if (process && process.env) {
       switch (process.env.NODE_ENV) {
         case 'test': {
           // Here we only process local folder, no API
           const gradepath = './tests/sampledata/gradereports/';
           // Fetch the files locally in the test folder.
-          reportlist = await getGradeReportsFromLocalFolder(gradepath);
+          collections = await getGradeReportsFromLocalFolder(gradepath);
           break;
         }
         case 'development': {
           const currenturl = new URL(window.location.href);
-          reportlist = await getGradeReportsFromAPI(
+          collections = await getGradeReportsFromAPI(
             `${currenturl.protocol}//${currenturl.host}`,
             'devcourse',
           );
@@ -56,7 +56,7 @@ const fetchCourseGrades = () => (
           if (typeof window !== 'undefined' && window.document && window.document.createElement) {
             // We are in the browser and supposedly logged in.
             const currenturl = new URL(window.location.href);
-            reportlist = await getGradeReportsFromAPI(
+            collections = await getGradeReportsFromAPI(
               `${currenturl.protocol}//${currenturl.host}`,
               getCourseIDFromURL(currenturl),
             );
@@ -64,26 +64,27 @@ const fetchCourseGrades = () => (
         }
       }
     }
-    if (reportlist) {
+    if (collections) {
       // TODO: we limit the number of reports if this value is defined
       // TODO : rework this part
-      let LIMITREPORTPERWEEK=true;
+      console.log('Collections...before');
+      console.log(collections);
+
       if (typeof LIMITREPORTPERWEEK !== 'undefined' && LIMITREPORTPERWEEK) {
-        reportlist = reportlist.sort((r1, r2) => r1.name.localeCompare(r2.name));
-        console.log(reportlist);
-        reportlist = Array.from(reportlist).filter((value, index, array) => {
+
+        collections = collections.sort((r1, r2) => r1.timestamp - r2.timestamp);
+        collections = Array.from(collections).filter((value, index, array) => {
           if (index === 0) return true;
           const WEEKLAPSE = 604800000;
-          const thiscollection = getCollectionFromFilename(value.name);
-          const lastcollection = getCollectionFromFilename(array[index - 1].name);
-          if ((thiscollection.timestamp - lastcollection.timestamp) > WEEKLAPSE) {
+          if ((value.timestamp - array[index - 1].timestamp) > WEEKLAPSE) {
             return true;
           }
           return false;
         });
-        console.log(reportlist);
+        console.log('Collections...after');
+        console.log(collections);
       }
-      return parseGradeReports(reportlist)
+      return parseGradeReports(collections)
         .then((grades) => {
           dispatch(getCourseGrades(grades));
           dispatch(finishedFetchingCourseGrades());
