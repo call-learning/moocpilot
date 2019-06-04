@@ -16,7 +16,7 @@ import './App.scss';
 const App = () => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <div>
+      <div className="mp-fe">
         <header>
           <nav>
             <ul className="nav">

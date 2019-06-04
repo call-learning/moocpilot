@@ -60,10 +60,10 @@ class MOOCPilotApp extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div>
+          <div className="col-sm-2">
             {menu}
           </div>
-          <div>
+          <div className="col-sm-8">
             {graph}
           </div>
         </div>

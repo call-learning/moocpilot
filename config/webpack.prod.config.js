@@ -6,7 +6,9 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
-
+const precss = require('precss');
+const autoprefixer = require('autoprefixer');
+const prefixer = require('postcss-prefix-selector');
 
 module.exports = Merge.smart(commonConfig, {
   mode: 'production',
@@ -51,6 +53,17 @@ module.exports = Merge.smart(commonConfig, {
             options: {
               sourceMap: true,
               minimize: true,
+            },
+          }, {
+            loader: 'postcss-loader', // Run post css actions
+            options: {
+              plugins() { // post css plugins, can be exported to postcss.config.js
+                return [
+                  precss,
+                  autoprefixer,
+                  prefixer({ prefix: '.mp-fe' }),
+                ];
+              },
             },
           },
           {

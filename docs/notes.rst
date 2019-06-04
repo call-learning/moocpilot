@@ -26,7 +26,7 @@ Integrate the application into edX
 ::
     <div id="root"></div>
     <script>
-        //global._babelPolyfill = false;
+        global._babelPolyfill = false;
         moocpilotfrontendbaseurl='https://call-learning.github.io/moocpilot/ressources/';
     </script>
     <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
