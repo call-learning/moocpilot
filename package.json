@@ -58,7 +58,7 @@
     "css-loader": "^0.28.9",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "es-check": "^2.0.2",
+    "es-check": "^9.5.4",
     "eslint-config-edx": "^4.0.3",
     "file-loader": "^1.1.9",
     "gh-pages": "^1.1.0",
